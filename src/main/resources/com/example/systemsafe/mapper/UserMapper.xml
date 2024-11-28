@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.systemsafe.mapper.UserMapper">
+
+    <select id="findPerms" resultType="com.example.systemsafe.entity.Permission">
+        select * from t_permission tp where id in(select per_id from t_user_perm tup   where user_id  = #{userId})
+    </select>
+
+    <select id="findRolePerms" resultType="com.example.systemsafe.entity.Permission">
+        select * from t_permission tp where id in(
+            select per_id from t_role_perm trp    where role_id in(select role_id  from t_user_role tur    where user_id  = #{userId})
+        )
+    </select>
+</mapper>
